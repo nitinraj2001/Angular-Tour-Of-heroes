@@ -12,7 +12,6 @@ export class HeroesComponent implements OnInit {
 
   hero : Hero[]=[];
 
-  selectedHero?: Hero;
 
   
 
@@ -24,12 +23,12 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeros(){
-    this.hero=this.heroservice.getHeros();
+    this.heroservice.getHeros().subscribe(data=>this.hero=data);
   }
 
-  showHeroDetails(viewhero: Hero){
-    this.messageService.add(`HeroComponent: is ready to show hero detail's of hero id:${viewhero.id}`)
-    this.selectedHero=viewhero;
+  delete(hero: Hero): void {
+    this.hero = this.hero.filter(temphero => temphero!== hero);
+    this.heroservice.deleteHero(hero.id).subscribe();
   }
 
 }
